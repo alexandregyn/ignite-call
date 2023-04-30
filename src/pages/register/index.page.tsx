@@ -7,6 +7,8 @@ import { Container, Form, FormError, Header } from "./styles";
 import { z } from "zod";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { api } from "../../lib/axios";
+import { AxiosError } from "axios";
 
 const registerFormSchema = z.object({
   username: z.string()
@@ -39,8 +41,17 @@ export default function Register() {
     }
   }, [router.query?.username, setValue]);
 
-  const handleRegister = async (data: registerFormData) => {
-    console.log(data);
+  const handleRegister = async (register: registerFormData) => {
+    try {
+      await api.post('/users', register);
+    } catch (error) {
+      if (error instanceof AxiosError && error.response?.data?.message) {
+        alert(error.response.data.message);
+        return;
+      }
+
+      console.log(error);
+    }
   }
 
   return (
