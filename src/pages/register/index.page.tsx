@@ -23,7 +23,7 @@ const registerFormSchema = z.object({
 
 type registerFormData = z.infer<typeof registerFormSchema>;
 
-export default function Register() {
+export default function TimeIntervals() {
   const { 
     register, 
     handleSubmit, 
